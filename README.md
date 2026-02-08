@@ -1,4 +1,4 @@
-# Wall Street Junior Clone - Financial Simulation Engine
+# Paper Street - Financial Simulation Engine
 
 ## 概要 (Overview)
 
