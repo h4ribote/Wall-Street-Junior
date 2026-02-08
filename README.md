@@ -12,24 +12,6 @@
 * **Database:** MySQL 8.0
 * **Infrastructure:** Docker & Docker Compose
 
-## システムアーキテクチャ
-
-```mermaid
-graph TD
-    User[ブラウザ (Player)] -- HTTP/WebSocket --> API[FastAPI Container]
-    API -- Read/Write --> DB[(MySQL Container)]
-    
-    subgraph Backend Logic
-        MarketEngine[市場変動エンジン]
-        OrderMatch[注文処理システム]
-        NewsGen[ニュース生成・経済イベント]
-    end
-    
-    MarketEngine -- 定期更新 --> DB
-    NewsGen -- イベント発生 --> MarketEngine
-
-```
-
 ## シミュレーション詳細仕様
 
 ### 1. 資産クラス (Asset Classes)
