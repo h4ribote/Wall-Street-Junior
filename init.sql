@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS instruments (
     instrument_id INT AUTO_INCREMENT PRIMARY KEY,
     ticker VARCHAR(10) UNIQUE NOT NULL,
     company_id INT NULL,
-    type ENUM('STOCK', 'BOND', 'CURRENCY', 'CRYPTO', 'INDEX') NOT NULL,
+    type ENUM('STOCK', 'BOND', 'CURRENCY', 'INDEX') NOT NULL,
     base_price DECIMAL(21, 0) NOT NULL COMMENT 'Integer scaled price',
     lot_size INT DEFAULT 1,
     is_tradable BOOLEAN DEFAULT TRUE,
@@ -169,8 +169,8 @@ CREATE TABLE IF NOT EXISTS assets_bond (
     UNIQUE(user_id, instrument_id)
 );
 
--- 資産管理: 暗号資産などその他 (Crypto/Index Assets - Spot)
-CREATE TABLE IF NOT EXISTS assets_crypto (
+-- 資産管理: Index (Index Assets)
+CREATE TABLE IF NOT EXISTS assets_index (
     asset_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     instrument_id INT NOT NULL,
