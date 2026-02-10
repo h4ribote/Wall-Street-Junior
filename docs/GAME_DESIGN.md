@@ -120,3 +120,4 @@ MMOとしての長期的なモチベーションを維持するため、シー�
     *   **DB Container**: MySQL
     *   **Bot Containers**: 複数のPythonスクリプト（Market Maker, Whale等）を独立したコンテナとして起動し、API経由で市場に参加させる。
 *   **Real-time**: WebSocket (FastAPI標準のサポートを利用)
+*   **Authentication**: Discord OAuth2
