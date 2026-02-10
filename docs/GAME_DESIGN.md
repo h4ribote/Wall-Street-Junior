@@ -1,4 +1,4 @@
-# Game Design Document: Paper Street (仮)
+# Game Design Document: Paper Street
 
 ## 1. プロジェクト概要
 **Paper Street** は、現実的な金融市場をシミュレートしたトレーディングゲームです。「Wall Street Junior」をインスピア元とし、プロフェッショナルなトレーダーとしての体験を提供します。
@@ -18,6 +18,7 @@
 リアリティを追求するため、以下の高度な経済モデルを実装します。
 
 ### 高度な市場シミュレーション
+*   **24時間市場 (24/7 Market)**: 株式、債券、FXを含むすべての資産クラスが、24時間365日取引可能です。
 *   **Order Book (板情報) システム**: 単なる価格変動ではなく、Buy/Sellの注文状況（板）を可視化。プレイヤーの注文が板に並び、実際に市場価格に影響を与える。
 *   **流動性 (Liquidity)**: 取引量が少ない銘柄ではスプレッドが広がり、大量注文が価格を大きく動かす（Market Impact）リスクを再現。
 *   **マクロ経済指標**: 金利（政策金利）、インフレ率（CPI）、GDP、失業率などの指標が定期的に発表され、すべての資産クラスに相関的な影響を与える。
@@ -26,9 +27,8 @@
 ### 資産クラスの拡充
 *   **Stocks**: セクター分類（Tech, Energy, Finance等）と、ファンダメンタルズ（PER, EPS）に基づく価格形成。
 *   **Bonds**: イールドカーブの概念を導入。短期・中期・長期国債の利回り変動。
-*   **Crypto**: 24時間取引可能、ボラティリティが極めて高い投機的資産。
 
-## 4. リアルタイム PvP 要素
+## 4. リアルタイム要素
 「同じ市場を見る」だけでなく、「互いに影響し合う」マルチプレイヤー体験を提供します。
 
 ### Global Market (MMO型市場)
@@ -63,7 +63,7 @@
 2.  **Market Watch (監視リスト)**:
     *   お気に入り銘柄のリスト。現在値、変動率、ミニチャートを表示。
 3.  **Chart Panel (メイン)**:
-    *   多機能チャート（TradingView風）。インジケーター（MA, Bollinger Bands, MACD等）の追加が可能。
+    *   多機能チャート（TradingView）。インジケーター（MA, Bollinger Bands, MACD等）の追加が可能。
     *   **Drag & Drop Order**: チャート上の価格ラインをドラッグして指値を変更する直感的な操作。
 4.  **Order Book & Depth (板情報)**:
     *   **Level 2 Data**: すべての指値注文を可視化。
@@ -79,23 +79,20 @@
 *   **Limit (指値)**: 指定価格で待つ。流動性供給者（Maker）として手数料リベートを得られる（予定）。
 *   **Stop / Stop Limit**: 損切りやブレイクアウト狙い。
 
-### 取引手数料と税金 (Fees & Taxes)
-#### 1. 手数料 (Commission)
-*   **株式・債券 (Stocks/Bonds)**: 「証券会社モデル」。
-    *   基本手数料: 取引額の 0.1%。
-    *   買い注文は発注時に、売り注文は約定時に決済通貨から追加徴収。
-*   **Crypto/FX**: 「取引所モデル (Maker/Taker)」。
-    *   **Maker (指値)**: -0.02% (リベート) または 無料。
-    *   **Taker (成行)**: 0.10% (支払い)。
-    *   受け取る通貨から差し引く (Deduct from Asset)。
-*   **Tier制度 (fee_tier)**: 
-    *   高ランクのプレイヤーは割引あり。
+### 取引手数料 (Fees)
+* `fee_tier` で手数料率が決定される。
+
+| fee_tier | maker_fee | taker_fee |
+| --- | --- | --- |
+| 1 | 0.02% | 0.10% |
+| 2 | 0.01% | 0.05% |
+| 3 | 0.00% | 0.00% |
 
 ## 7. ゲーム進行 (Seasonal System)
 MMOとしての長期的なモチベーションを維持するため、シーズン制を導入します。
 
 ### シーズンサイクル (2ヶ月)
-*   **リセット**: シーズン終了時に全プレイヤーの資金（Liquidity）とポジションはリセットされる。
+*   **リセット**: シーズン終了時に全プレイヤーの資産とポジションはリセットされる。
 *   **ランキング**: 「総資産額」「最大瞬間ROI」などでランキングを決定。
 *   **報酬**:
     *   **称号 (Titles)**: "Wolf of Paper Street", "Market Wizard" など。
@@ -103,16 +100,16 @@ MMOとしての長期的なモチベーションを維持するため、シー�
 
 ### シーズンテーマ (Dynamic Meta)
 シーズンごとに市場の「ルール」や「トレンド」が変化します。
-*   **Season 1: The Great Depression**: 全体的に弱気相場。空売りのスキルが試される。
-*   **Season 2: Tech Bubble**: テック株のボラティリティが極端に高い。
-*   **Season 3: Hyperinflation**: 現金の価値が下がるため、常にポジションを持っておく必要がある。
+*   **The Great Depression**: 全体的に弱気相場。空売りのスキルが試される。
+*   **Tech Bubble**: テック株のボラティリティが極端に高い。
+*   **Hyperinflation**: 現金の価値が下がるため、常にポジションを持っておく必要がある。
 
 ## 8. 技術スタック（Python & Docker）
 ユーザーの要望に基づき、バックエンドはPythonで統一し、Dockerで環境を構築します。
 
 *   **Frontend**: HTML5 / JavaScript (Vanilla ES6+)
     *   ビルドツール不要のシンプルな構成。
-    *   **CSS Framework**: Tailwind CSS (CDN経由) または Bootstrap 5 でデザインを効率化。
+    *   **CSS Framework**: Tailwind CSS または Bootstrap 5 でデザインを効率化。
     *   **Charting Library**: Lightweight Charts (TradingView) - 高性能かつ軽量なチャート描画。
 *   **Backend**: Python 3.12+ (FastAPI)
     *   非同期処理（`asyncio`）を活用し、高頻度な注文処理をさばく。
