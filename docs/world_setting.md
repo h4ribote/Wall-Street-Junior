@@ -85,6 +85,24 @@
     *   主要輸出品は遺伝子組み換え大豆と合成肉。
     *   **リスク**: 干ばつ、病害虫、他国企業による農地や水源の買収。
 
+### 6. Novaya Zemlya (ノヴァヤ・ゼムリャ)
+*   **地域**: Northern Alliance
+*   **タイプ**: Energy / Industrial
+*   **通貨**: Zemlya Ruble (ZMR)
+*   **詳細**:
+    *   極寒の地に建設された巨大エネルギー都市。地熱発電と原子力発電のメッカ。
+    *   豊富なエネルギーを背景に、データセンターや重工業が集積している。
+    *   **リスク**: 原子力事故、冷却水不足、永久凍土の融解によるインフラ崩壊。
+
+### 7. Pearl River Zone (パールリバー特区)
+*   **地域**: Eastern Coalition
+*   **タイプ**: Industrial Giant / Tech
+*   **通貨**: River Dollar (RVD)
+*   **詳細**:
+    *   世界最大の電子機器生産拠点。サイバネティクス技術の実用化特区。
+    *   24時間稼働の工場群と、ネオン輝くサイバーパンクな街並みが特徴。
+    *   **リスク**: 労働争議、産業スパイ、新型ウイルスの発生源。
+
 ---
 
 ## 4. 企業・セクター (Sectors & Companies)
@@ -94,12 +112,16 @@
     *   **Supply Chain**: 半導体原料としてレアメタル（El Dorado）を大量に消費。電力価格の影響を強く受ける。
 *   **CyberLife (CYB)**: [Neo Venice] 人工義体やサイバネティクス技術のトップシェア。倫理的な問題を度々起こす。
     *   **Supply Chain**: Titan Energyから特殊な合成燃料を購入。
+*   **Silicon Dragon (SLD)**: [Pearl River] 半導体およびマイクロチップの世界最大手。
+    *   **Supply Chain**: El Doradoからレアメタルを輸入し、OmniCorpやAegis Systemsにチップを供給。
 
 ### Energy (ENERGY)
 *   **Titan Energy (TTN)**: [Boros] 旧時代の化石燃料採掘大手だが、再生可能エネルギーへの転換を進めている。
     *   **Supply Chain (Upstream)**: 原油・天然ガスを世界中に供給。特にBoros国内の重工業（Iron Fist Armaments）への供給責任を持つ。
 *   **Helios Solar (SOL)**: [El Dorado] 砂漠地帯を利用した大規模太陽光発電を行う。
     *   **Supply Chain (Upstream)**: クリーンエネルギーをOmniCorpのデータセンター群に供給。
+*   **Atomos Energy (ATM)**: [Novaya Zemlya] 次世代原子炉と地熱発電を運営。安価で安定したベースロード電源を供給。
+    *   **Supply Chain (Upstream)**: 世界中の電力会社やエネルギー多消費産業（データセンター等）に供給。
 
 ### Finance (FIN)
 *   **Goliath Bank (GLT)**: [Arcadia] 世界最大の投資銀行。「Too big to fail」の代名詞。
@@ -115,6 +137,8 @@
     *   **Supply Chain**: CyberLifeから装飾用パーツを仕入れている。
 *   **Red Ox Food (ROX)**: [San Verde] 世界最大の食肉加工・穀物商社。食料危機が起きると逆に利益を上げる構造を持つ。
     *   **Supply Chain (Upstream)**: 世界中の食品メーカーに原材料を供給。
+*   **Global News Network (GNN)**: [Neo Venice] 世界的なメディアコングロマリット。情報の偏向報道で世論を操作しているとの噂が絶えない。
+    *   **Supply Chain**: 通信インフラ企業に依存。
 
 ### Defense / Industrial (DEF)
 *   **Iron Fist Armaments (IFA)**: [Boros] ボロス連邦国営の兵器メーカー。安価で頑丈な戦車や銃器を紛争地帯に輸出。
@@ -125,6 +149,8 @@
 ### Logistics / Transport (LOG)
 *   **Trans-Oceanic (TRN)**: [Neo Venice] 海上物流の最大手。完全無人化された巨大コンテナ船団を運航。
 *   **Void Cargo (VDC)**: [Arcadia] 軌道エレベーター建設に関わる宇宙輸送ベンチャー。ロケット打ち上げ失敗で株価が急落することがある。
+*   **Horizon Logistics (HRZ)**: [Arcadia] ドローン配送ネットワークを運営。ラストワンマイル物流を支配。
+    *   **Supply Chain**: Aegis Systemsのドローン技術を民生転用。
 
 ---
 
@@ -139,3 +165,27 @@
 *   **Boros Election**: ボロス連邦の大統領選。現職（強硬派）か対立候補（改革派）かによって、軍事費や貿易政策が大きく変わる。
 *   **Arcadia Privacy Act**: アルカディアで厳格なプライバシー法が成立。データを売買するビジネスモデルの企業が大打撃を受ける。
 *   **El Dorado Succession**: 国王が急死し、親北派の長男と親東派の次男による対立が激化。内戦リスクで通貨DRLが暴落。
+
+---
+
+## 6. 資源・コモディティ (Resources & Commodities)
+ゲーム内で取引・消費される主要な資源リスト。これらは`Assets`として取引されるほか、企業の業績（`Supply Chain`）に直接影響を与えます。
+
+### Energy (エネルギー)
+*   **Crude Oil (原油)**: [Titan Energy] 旧世界の血液。プラスチック原料としても必須。
+*   **Natural Gas (天然ガス)**: [Titan Energy] 火力発電や暖房用。
+*   **Uranium (ウラン)**: [Atomos Energy] 原子力発電の燃料。
+*   **Energy Credits (電力証書)**: [Helios Solar, Atomos Energy] データセンターやAI企業の稼働に不可欠。
+
+### Metals / Materials (金属・素材)
+*   **Rare Earth Metals (レアアース)**: [El Dorado] 半導体、バッテリー、先端兵器の製造に必須。供給不足はテックセクターに打撃。
+*   **Steel (鉄鋼)**: [Boros] ビル建設、兵器、自動車などの基礎素材。
+*   **Water (工業用水/飲料水)**: [San Verde, Novaya Zemlya] 気候変動により価値が高騰。半導体洗浄にも大量に必要。
+
+### Agriculture / Food (農業・食料)
+*   **Grain (穀物)**: [San Verde] 小麦、トウモロコシなど。食料危機の指標。
+*   **Synthetic Meat (合成肉)**: [Red Ox Food] 培養肉。環境負荷が低いが、食の安全性が問われることもある。
+
+### Technology / Components (技術・部品)
+*   **Semiconductors (半導体)**: [Silicon Dragon] 「産業の米」。あらゆる電子機器に搭載される。
+*   **Bio-Gel (バイオジェル)**: [Chimera Genetics] 医療ポッドや再生治療に使われる特殊素材。
