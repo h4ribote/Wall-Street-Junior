@@ -1,0 +1,46 @@
+# Tradable Assets & Currencies
+
+## Stocks (株式)
+
+| Company Name | Ticker | Sector | HQ Location | Trading Currency |
+| :--- | :--- | :--- | :--- | :--- |
+| OmniCorp | OMNI | TECH | Arcadia | ARC |
+| Quantum Dynamics | QDY | TECH | Arcadia | ARC |
+| CyberLife | CYB | TECH | Neo Venice | VND |
+| Silicon Dragon | SLD | TECH | Pearl River | RVD |
+| Titan Energy | TTN | ENERGY | Boros | BRB |
+| Nebula Mining | NEB | ENERGY | Novaya Zemlya | ZMR |
+| Helios Solar | SOL | ENERGY | El Dorado | DRL |
+| Atomos Energy | ATM | ENERGY | Novaya Zemlya | ZMR |
+| Goliath Bank | GLT | FIN | Arcadia | ARC |
+| Shadow Fund | SHD | FIN | Neo Venice | VND |
+| Chimera Genetics | CHM | BIO | Arcadia | ARC |
+| Verde Pharma | VPH | BIO | San Verde | VDP |
+| Panacea Corp | PAN | BIO | El Dorado | DRL |
+| Stardust Luxury | SDL | CONS | Neo Venice | VND |
+| Red Ox Food | ROX | CONS | San Verde | VDP |
+| Global News Network | GNN | CONS | Neo Venice | VND |
+| Iron Fist Armaments | IFA | DEF | Boros | BRB |
+| Aegis Systems | AEG | DEF | Arcadia | ARC |
+| Trans-Oceanic | TRN | LOG | Neo Venice | VND |
+| Void Cargo | VDC | LOG | Arcadia | ARC |
+| Horizon Logistics | HRZ | LOG | Arcadia | ARC |
+
+## Resources & Commodities (資源・コモディティ)
+
+| Resource Name | Type | Primary Origin | Trading Currency |
+| :--- | :--- | :--- | :--- |
+| Crude Oil (原油) | ENERGY | Boros (Titan Energy) | BRB |
+| Natural Gas (天然ガス) | ENERGY | Boros (Titan Energy) | BRB |
+| Hydrogen (水素) | ENERGY | El Dorado (Helios Solar) | DRL |
+| Uranium (ウラン) | ENERGY | Novaya Zemlya (Atomos Energy) | ZMR |
+| Energy Credits (電力証書) | ENERGY | El Dorado / Novaya Zemlya | DRL / ZMR |
+| Rare Earth Metals (レアアース) | METAL | El Dorado | DRL |
+| Lithium (リチウム) | METAL | El Dorado | DRL |
+| Steel (鉄鋼) | METAL | Boros | BRB |
+| Water (水) | BASIC | San Verde / Novaya Zemlya | VDP / ZMR |
+| Grain (穀物) | FOOD | San Verde | VDP |
+| Synthetic Meat (合成肉) | FOOD | San Verde (Red Ox Food) | VDP |
+| Semiconductors (半導体) | TECH | Pearl River (Silicon Dragon) | RVD |
+| Cyber-Implants (インプラント) | TECH | Neo Venice (CyberLife) | VND |
+| Bio-Gel (バイオジェル) | TECH | Arcadia (Chimera Genetics) | ARC |
