@@ -40,9 +40,3 @@
 
 ### [Wall Street Junior Reference](./WALL_STREET_JUNIOR_REFERENCE.md)
 *   インスピレーション元となったゲームの調査報告書。
-
----
-
-## 4. 変更履歴 (Change Log)
-*   **v1.0**: 初期ドラフト作成
-*   **v1.1**: [Critical Review](./CRITICAL_REVIEW.md) (Deleted) に基づき、経済システム、Bot挙動、技術アーキテクチャの大幅な見直しと詳細化を実施。ドキュメントを分割。
