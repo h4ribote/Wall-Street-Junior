@@ -21,6 +21,7 @@
 *   **市場の健全性**: サーキットブレーカー、相場操縦（Pump & Dump）対策、空売り規制。
 *   **資産クラス**: 株式、債券、FX、デリバティブ。
 *   **シーズン制**: ランキング、報酬、シーズンごとのテーマ（大恐慌、バブル等）。
+*   **Dual Liquidity Inventory (DLI)**: [詳細設計](./design/DUAL_LIQUIDITY_INVENTORY.md) - 現金と現物の在庫を利用率に応じて管理する、金利とショートコストの動的決定メカニズム。
 
 ### [AI Traders & Bot Ecosystem](./design/AI_ECOSYSTEM.md)
 *   **ボットの役割**: Market Maker, Trend Follower, Mean Reverter, Whale, News Reactor。
