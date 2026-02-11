@@ -322,4 +322,34 @@ CREATE TABLE IF NOT EXISTS liquidity_positions (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
+-- --------------------------------------------------------
+-- 6. Margin Trading Pools (Dual Liquidity Inventory)
+-- --------------------------------------------------------
+
+-- 信用取引流動性プール (Margin Pools)
+-- 各銘柄(Asset)ごとの現金在庫と現物在庫を管理
+CREATE TABLE IF NOT EXISTS margin_pools (
+    pool_id INT AUTO_INCREMENT PRIMARY KEY,
+    asset_id INT NOT NULL COMMENT 'The asset being traded',
+    currency_id INT NOT NULL COMMENT 'The quote currency (e.g. ARC)',
+    
+    -- Cash Vault (Currency Inventory)
+    total_cash DECIMAL(21, 0) DEFAULT 0 COMMENT 'Total cash liquidity available',
+    borrowed_cash DECIMAL(21, 0) DEFAULT 0 COMMENT 'Cash borrowed by long positions',
+    
+    -- Asset Vault (Asset Inventory)
+    total_assets DECIMAL(21, 0) DEFAULT 0 COMMENT 'Total asset liquidity available',
+    borrowed_assets DECIMAL(21, 0) DEFAULT 0 COMMENT 'Assets borrowed by short positions',
+    
+    -- Interest Rates (Snapshot/Current)
+    borrow_rate DECIMAL(21, 0) DEFAULT 0 COMMENT 'Long interest rate (Cost to borrow cash)',
+    short_fee DECIMAL(21, 0) DEFAULT 0 COMMENT 'Short fee rate (Cost to borrow asset)',
+    
+    updated_at BIGINT DEFAULT 0,
+    
+    FOREIGN KEY (asset_id) REFERENCES assets(asset_id),
+    FOREIGN KEY (currency_id) REFERENCES currencies(currency_id),
+    UNIQUE(asset_id, currency_id)
+);
+
 SET FOREIGN_KEY_CHECKS = 1;
