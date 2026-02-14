@@ -34,8 +34,8 @@
 
 ### 定義
 
-* $U_{cash}$ (現金利用率) = $\frac{Borrowed\ Cash}{Total\ Cash}$
-* $U_{asset}$ (在庫利用率) = $\frac{Borrowed\ Asset}{Total\ Asset}$
+* $`U_{cash}`$ (現金利用率) = $`\frac{Borrowed\ Cash}{Total\ Cash}`$
+* $`U_{asset}`$ (在庫利用率) = $`\frac{Borrowed\ Asset}{Total\ Asset}`$
 
 ### 金利計算式 (在庫が減るほど急激に高くなる)
 
@@ -47,8 +47,8 @@
     *   **高騰時 (High Utilization)**: 在庫枯渇時は日次 **1.0% ～ 5.0%** まで上昇します（ショートスクイーズ発生時など）。
 *   **UI表示**: 「年利 (APY)」ではなく、**「日次金利 (Daily Rate)」** や **「Borrow Fee: 0.05% / day」** と表示します。
 
-* **ロング金利 (Borrow Rate)**: $U_{cash}$ が高いほど上昇。
-* **貸出料 (Short Fee)**: $U_{asset}$ が高いほど上昇。
+* **ロング金利 (Borrow Rate)**: $`U_{cash}`$ が高いほど上昇。
+* **貸出料 (Short Fee)**: $`U_{asset}`$ が高いほど上昇。
 
 ---
 
@@ -67,7 +67,7 @@
 1. **在庫確認**: `margin_pools` の `(total_cash - borrowed_cash)` を確認。5株分の購入代金（例: 500 ARC）があるか？
 2. **資金調達**:
 * `borrowed_cash` を +500 ARC。
-* プール内の現金利用率 $U_{cash}$ が上昇 → **ロング金利上昇**。
+* プール内の現金利用率 $`U_{cash}`$ が上昇 → **ロング金利上昇**。
 
 
 3. **市場執行**:
@@ -85,7 +85,7 @@
 1. **在庫確認**: `margin_pools` の `(total_assets - borrowed_assets)` を確認。貸せる株が5株あるか？
 2. **株調達**:
 * `borrowed_assets` を +5 株。
-* プール内の株利用率 $U_{asset}$ が上昇 → **貸出料（逆日歩）上昇**。
+* プール内の株利用率 $`U_{asset}`$ が上昇 → **貸出料（逆日歩）上昇**。
 
 
 3. **市場執行**:
@@ -95,7 +95,7 @@
 4. **資金還流 (Liquidity Injection)**:
 * 売却代金 500 ARC は、ショートポジションの担保としてプール内に留保される。
 * **ここがポイント**: これを「貸出可能現金」として扱う（Rehypothecation）。
-* `total_cash`（または見かけ上の供給量）が増加するため、現金利用率 $U_{cash}$ が低下 → **ロング金利下落**。
+* `total_cash`（または見かけ上の供給量）が増加するため、現金利用率 $`U_{cash}`$ が低下 → **ロング金利下落**。
 
 ---
 
