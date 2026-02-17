@@ -1,0 +1,296 @@
+{
+  "version": "1.1",
+  "meta": {
+    "description": "News templates and patterns for the Paper Street financial MMO.",
+    "world_context": "Based on world_setting.md (Arcadia, Boros, Neo Venice, etc.)",
+    "languages": ["en", "ja"]
+  },
+  "categories": {
+    "EARNINGS": {
+      "id": "EARNINGS",
+      "name_en": "Earnings Report",
+      "name_ja": "決算発表",
+      "description": "Quarterly financial results and guidance from listed companies.",
+      "patterns": [
+        {
+          "id": "EARNINGS_BEAT_BOTH",
+          "headline_template_en": "{company_name} ({ticker}) Smashes Q{quarter} Earnings Expectations",
+          "headline_template_ja": "{company_name} ({ticker})、第{quarter}四半期決算が予想を大幅に上回る",
+          "body_template_en": "{company_name} reported Q{quarter} EPS of {eps} (vs. est {eps_est}) and Revenue of {revenue}B (vs. est {revenue_est}B). CEO cites 'unprecedented demand' for {product}.",
+          "body_template_ja": "{company_name}の第{quarter}四半期決算は、EPS {eps}（予想 {eps_est}）、売上高 {revenue}B（予想 {revenue_est}B）となり、市場予想をクリア。CEOは「{product}への空前の需要」を強調。",
+          "sentiment_range": [0.7, 1.0],
+          "impact_scope": ["{ticker}"],
+          "variables": ["company_name", "ticker", "quarter", "eps", "eps_est", "revenue", "revenue_est", "product"]
+        },
+        {
+          "id": "EARNINGS_MISS_BOTH",
+          "headline_template_en": "{company_name} ({ticker}) Misses Q{quarter} Estimates, Shares Tumble",
+          "headline_template_ja": "{company_name} ({ticker})、第{quarter}四半期決算が予想未達で株価急落",
+          "body_template_en": "Disappointing Q{quarter} results from {company_name}: EPS {eps} (vs. est {eps_est}), Revenue {revenue}B (vs. est {revenue_est}B). Supply chain issues cited as primary cause.",
+          "body_template_ja": "{company_name}の第{quarter}四半期決算は失望売り。EPS {eps}（予想 {eps_est}）、売上高 {revenue}B（予想 {revenue_est}B）。サプライチェーンの問題が主な要因。",
+          "sentiment_range": [-1.0, -0.6],
+          "impact_scope": ["{ticker}"],
+          "variables": ["company_name", "ticker", "quarter", "eps", "eps_est", "revenue", "revenue_est"]
+        },
+        {
+          "id": "EARNINGS_MIXED_GUIDANCE_UP",
+          "headline_template_en": "{company_name} ({ticker}) Reports Mixed Q{quarter}, Raises Guidance",
+          "headline_template_ja": "{company_name} ({ticker})、決算はまちまちも通期見通しを上方修正",
+          "body_template_en": "{company_name} missed on revenue but beat on earnings. Management raises full-year guidance, expecting strong growth in the {sector} sector.",
+          "body_template_ja": "{company_name}は売上高で未達となったものの、利益は予想を上回った。経営陣は{sector}セクターの成長を見込み、通期ガイダンスを引き上げた。",
+          "sentiment_range": [0.3, 0.6],
+          "impact_scope": ["{ticker}", "{sector}"],
+          "variables": ["company_name", "ticker", "quarter", "sector"]
+        },
+        {
+          "id": "EARNINGS_MIXED_GUIDANCE_DOWN",
+          "headline_template_en": "{company_name} ({ticker}) Beats Q{quarter} Earnings, Lowers Guidance",
+          "headline_template_ja": "{company_name} ({ticker})、決算好調も通期見通しを下方修正",
+          "body_template_en": "Despite a Q{quarter} earnings beat, {company_name} lowered its full-year outlook due to rising raw material costs.",
+          "body_template_ja": "第{quarter}四半期決算は予想を上回ったものの、{company_name}は原材料費の高騰を理由に通期見通しを引き下げた。",
+          "sentiment_range": [-0.5, -0.2],
+          "impact_scope": ["{ticker}"],
+          "variables": ["company_name", "ticker", "quarter"]
+        }
+      ]
+    },
+    "MACRO": {
+      "id": "MACRO",
+      "name_en": "Macro Economic Indicators",
+      "name_ja": "マクロ経済指標",
+      "description": "Data releases regarding the economic health of nations (GDP, CPI, Unemployment).",
+      "patterns": [
+        {
+          "id": "GDP_GROWTH_UP",
+          "headline_template_en": "{country} GDP Grows {gdp_growth}% in Q{quarter}, Beating Forecasts",
+          "headline_template_ja": "{country}の第{quarter}四半期GDP、{gdp_growth}%成長で予想を上回る",
+          "body_template_en": "Economic activity in {country} accelerated in Q{quarter}, driven by strong consumer spending and exports. Analysts expected {gdp_est}%.",
+          "body_template_ja": "{country}の経済活動は第{quarter}四半期に加速し、個人消費と輸出が牽引した。アナリスト予想は{gdp_est}%だった。",
+          "sentiment_range": [0.4, 0.7],
+          "impact_scope": ["{currency}", "ALL_STOCKS"],
+          "variables": ["country", "quarter", "gdp_growth", "gdp_est", "currency"]
+        },
+        {
+          "id": "GDP_GROWTH_DOWN",
+          "headline_template_en": "{country} GDP Slumps to {gdp_growth}%, Raising Recession Fears",
+          "headline_template_ja": "{country}のGDP成長率が{gdp_growth}%に鈍化、景気後退の懸念高まる",
+          "body_template_en": "Economic growth in {country} slowed significantly in Q{quarter}, missing the {gdp_est}% forecast. Manufacturing output declined.",
+          "body_template_ja": "{country}の経済成長は第{quarter}四半期に大きく減速し、予想の{gdp_est}%を下回った。製造業の生産が落ち込んでいる。",
+          "sentiment_range": [-0.7, -0.4],
+          "impact_scope": ["{currency}", "ALL_STOCKS"],
+          "variables": ["country", "quarter", "gdp_growth", "gdp_est", "currency"]
+        },
+        {
+          "id": "CPI_INFLATION_UP",
+          "headline_template_en": "{country} Inflation Hits {cpi}%, Highest in Decade",
+          "headline_template_ja": "{country}のインフレ率が{cpi}%に到達、過去10年で最高水準",
+          "body_template_en": "Consumer prices in {country} rose {cpi}% year-over-year, exceeding expectations. Central bank likely to tighten policy.",
+          "body_template_ja": "{country}の消費者物価指数は前年比{cpi}%上昇し、予想を上回った。中央銀行は引き締め策を強化する公算が大きい。",
+          "sentiment_range": [-0.6, -0.3],
+          "impact_scope": ["{currency}", "BOND_YIELDS"],
+          "variables": ["country", "cpi", "currency"]
+        },
+        {
+          "id": "UNEMPLOYMENT_DOWN",
+          "headline_template_en": "{country} Unemployment Rate Falls to {unemployment}%",
+          "headline_template_ja": "{country}の失業率が{unemployment}%に改善",
+          "body_template_en": "Job growth remains robust in {country} as the unemployment rate drops to {unemployment}%. Labor market tightness may fuel wage inflation.",
+          "body_template_ja": "{country}の雇用は引き続き堅調で、失業率は{unemployment}%に低下した。労働市場の逼迫が賃金インフレを招く可能性がある。",
+          "sentiment_range": [0.3, 0.6],
+          "impact_scope": ["{currency}"],
+          "variables": ["country", "unemployment", "currency"]
+        }
+      ]
+    },
+    "CENTRAL_BANK": {
+      "id": "CENTRAL_BANK",
+      "name_en": "Central Bank Policy",
+      "name_ja": "中央銀行政策",
+      "description": "Interest rate decisions and monetary policy announcements.",
+      "patterns": [
+        {
+          "id": "RATE_HIKE",
+          "headline_template_en": "{central_bank} Hikes Interest Rate to {rate}%",
+          "headline_template_ja": "{central_bank}、政策金利を{rate}%に引き上げ",
+          "body_template_en": "The {central_bank} raised its benchmark interest rate by {basis_points} bps to combat rising inflation. Governor signals further hikes may be needed.",
+          "body_template_ja": "{central_bank}はインフレ抑制のため、政策金利を{basis_points}ベーシスポイント引き上げた。総裁は追加利上げの可能性を示唆。",
+          "sentiment_range": [-0.5, -0.8],
+          "impact_scope": ["{currency}", "ALL_STOCKS", "BOND_YIELDS"],
+          "variables": ["central_bank", "rate", "basis_points", "currency"]
+        },
+        {
+          "id": "RATE_CUT",
+          "headline_template_en": "{central_bank} Cuts Interest Rate to {rate}% to Stimulate Economy",
+          "headline_template_ja": "{central_bank}、景気刺激のため政策金利を{rate}%に引き下げ",
+          "body_template_en": "In a surprise move, the {central_bank} lowered rates by {basis_points} bps, citing cooling growth and global risks.",
+          "body_template_ja": "{central_bank}は成長鈍化と世界的なリスクを理由に、予想外の{basis_points}ベーシスポイント利下げを実施した。",
+          "sentiment_range": [0.4, 0.8],
+          "impact_scope": ["{currency}", "ALL_STOCKS"],
+          "variables": ["central_bank", "rate", "basis_points", "currency"]
+        },
+        {
+          "id": "RATE_HOLD_HAWKISH",
+          "headline_template_en": "{central_bank} Holds Rates at {rate}%, Signals Hawkish Stance",
+          "headline_template_ja": "{central_bank}、金利を{rate}%に据え置きもタカ派姿勢を維持",
+          "body_template_en": "The {central_bank} kept rates unchanged but warned that 'inflation remains too high,' implying rates will stay higher for longer.",
+          "body_template_ja": "{central_bank}は金利を据え置いたものの、「インフレ率は依然として高すぎる」と警告し、高金利の長期化を示唆した。",
+          "sentiment_range": [-0.2, -0.4],
+          "impact_scope": ["{currency}"],
+          "variables": ["central_bank", "rate", "currency"]
+        }
+      ]
+    },
+    "GEOPOLITICS": {
+      "id": "GEOPOLITICS",
+      "name_en": "Geopolitical Events",
+      "name_ja": "地政学イベント",
+      "description": "Conflicts, elections, treaties, and trade wars.",
+      "patterns": [
+        {
+          "id": "CONFLICT_ESCALATION",
+          "headline_template_en": "Tensions Rise as {country_a} Mobilizes Troops Near {country_b} Border",
+          "headline_template_ja": "{country_a}が{country_b}国境付近に軍を集結、緊張高まる",
+          "body_template_en": "Satellite imagery shows increased military activity. {country_a} accuses {country_b} of violating the peace treaty.",
+          "body_template_ja": "衛星画像で軍事活動の活発化が確認された。{country_a}は{country_b}が平和条約に違反していると非難している。",
+          "sentiment_range": [-0.8, -0.5],
+          "impact_scope": ["{currency_a}", "{currency_b}", "DEFENSE_SECTOR"],
+          "variables": ["country_a", "country_b", "currency_a", "currency_b"]
+        },
+        {
+          "id": "TRADE_DEAL_SIGNED",
+          "headline_template_en": "{country_a} and {country_b} Sign Historic Trade Agreement",
+          "headline_template_ja": "{country_a}と{country_b}、歴史的な貿易協定に署名",
+          "body_template_en": "The new pact lowers tariffs on {commodity} and technology exports, expected to boost trade volume by 20%.",
+          "body_template_ja": "新協定により{commodity}や技術輸出の関税が引き下げられ、貿易量は20%増加すると見込まれる。",
+          "sentiment_range": [0.5, 0.8],
+          "impact_scope": ["{currency_a}", "{currency_b}", "LOGISTICS_SECTOR"],
+          "variables": ["country_a", "country_b", "commodity", "currency_a", "currency_b"]
+        },
+        {
+          "id": "SANCTIONS_IMPOSED",
+          "headline_template_en": "{country_a} Imposes Sanctions on {company_name}",
+          "headline_template_ja": "{country_a}、{company_name}に対し制裁を発動",
+          "body_template_en": "{country_a} alleges {company_name} violated export controls. Assets frozen and trade restricted.",
+          "body_template_ja": "{country_a}は{company_name}が輸出管理規制に違反したと主張。資産凍結と取引制限が課された。",
+          "sentiment_range": [-0.6, -0.9],
+          "impact_scope": ["{ticker}"],
+          "variables": ["country_a", "company_name", "ticker"]
+        }
+      ]
+    },
+    "MARKET": {
+      "id": "MARKET",
+      "name_en": "Market Overview",
+      "name_ja": "市場概況",
+      "description": "General market movements, sector trends, and analyst ratings.",
+      "patterns": [
+        {
+          "id": "SECTOR_RALLY",
+          "headline_template_en": "{sector} Stocks Rally on {reason}",
+          "headline_template_ja": "{sector}関連株、{reason}を背景に上昇",
+          "body_template_en": "Major players in the {sector} sector saw gains today, driven by {reason}. {company_lead} led the charge, up {percent}%.",
+          "body_template_ja": "{reason}を材料に、{sector}セクターの主要銘柄が買われた。{company_lead}が{percent}%高と相場を牽引した。",
+          "sentiment_range": [0.4, 0.7],
+          "impact_scope": ["{sector}"],
+          "variables": ["sector", "reason", "company_lead", "percent"]
+        },
+        {
+          "id": "ANALYST_UPGRADE",
+          "headline_template_en": "Analyst Upgrades {company_name} ({ticker}) to 'Strong Buy'",
+          "headline_template_ja": "アナリストが{company_name} ({ticker})を「ストロング・バイ」に格上げ",
+          "body_template_en": "Leading firm upgrades {ticker}, citing 'undervalued assets' and 'strong growth potential'. Price target raised to {price_target}.",
+          "body_template_ja": "大手証券は「割安な資産」と「強い成長ポテンシャル」を理由に{ticker}を格上げした。目標株価は{price_target}に引き上げ。",
+          "sentiment_range": [0.3, 0.6],
+          "impact_scope": ["{ticker}"],
+          "variables": ["company_name", "ticker", "price_target"]
+        },
+        {
+          "id": "MARKET_CRASH_FEAR",
+          "headline_template_en": "Market Sell-Off Accelerates as Fear Gauge Spikes",
+          "headline_template_ja": "恐怖指数が急上昇、市場の売りが加速",
+          "body_template_en": "Global indices tumbled today amid concerns over {concern}. Investors are fleeing to safe-haven assets.",
+          "body_template_ja": "{concern}への懸念から世界の主要指数は急落した。投資家は安全資産へと逃避している。",
+          "sentiment_range": [-0.7, -1.0],
+          "impact_scope": ["ALL_STOCKS"],
+          "variables": ["concern"]
+        }
+      ]
+    },
+    "FLASH": {
+      "id": "FLASH",
+      "name_en": "Flash News",
+      "name_ja": "速報ニュース",
+      "description": "Sudden, unexpected events with high volatility impact.",
+      "patterns": [
+        {
+          "id": "ACCIDENT_EXPLOSION",
+          "headline_template_en": "BREAKING: Explosion Reported at {company_name} Facility in {location}",
+          "headline_template_ja": "【速報】{location}の{company_name}施設で爆発事故発生",
+          "body_template_en": "Emergency services are responding to a massive blast at the {company_name} plant. Casualties unknown. Production halted.",
+          "body_template_ja": "{company_name}の工場で大規模な爆発があり、緊急車両が向かっている。死傷者は不明。生産は停止中。",
+          "sentiment_range": [-0.8, -1.0],
+          "impact_scope": ["{ticker}", "{sector}"],
+          "variables": ["company_name", "location", "ticker", "sector"]
+        },
+        {
+          "id": "TECH_BREAKTHROUGH",
+          "headline_template_en": "{company_name} Announces Breakthrough in {technology}",
+          "headline_template_ja": "{company_name}、{technology}における画期的なブレイクスルーを発表",
+          "body_template_en": "Researchers at {company_name} claim to have solved a major hurdle in {technology}, potentially revolutionizing the industry.",
+          "body_template_ja": "{company_name}の研究チームは{technology}の主要な課題を解決したと主張しており、業界に革命をもたらす可能性がある。",
+          "sentiment_range": [0.8, 1.0],
+          "impact_scope": ["{ticker}"],
+          "variables": ["company_name", "technology", "ticker"]
+        },
+        {
+          "id": "CYBER_ATTACK",
+          "headline_template_en": "Massive Cyber Attack Hits {country}'s Financial Infrastructure",
+          "headline_template_ja": "{country}の金融インフラに大規模サイバー攻撃",
+          "body_template_en": "Banks and exchanges in {country} are reporting outages. {group_name} has claimed responsibility.",
+          "body_template_ja": "{country}の銀行や取引所でシステム障害が報告されている。ハッカー集団{group_name}が犯行声明を出した。",
+          "sentiment_range": [-0.6, -0.9],
+          "impact_scope": ["{currency}", "FIN_SECTOR"],
+          "variables": ["country", "group_name", "currency"]
+        }
+      ]
+    },
+    "FLAVOR": {
+      "id": "FLAVOR",
+      "name_en": "Flavor Text",
+      "name_ja": "フレーバーテキスト",
+      "description": "World-building news with no direct market impact.",
+      "patterns": [
+        {
+          "id": "CULTURAL_EVENT",
+          "headline_template_en": "{city} Hosts Annual {event_name}",
+          "headline_template_ja": "{city}で恒例の{event_name}が開催",
+          "body_template_en": "Thousands gathered in {city} for the {event_name}, celebrating art, technology, and culture.",
+          "body_template_ja": "{city}には数千人が集まり、{event_name}で芸術、技術、文化を祝った。",
+          "sentiment_range": [0.0, 0.1],
+          "impact_scope": [],
+          "variables": ["city", "event_name"]
+        },
+        {
+          "id": "CELEBRITY_GOSSIP",
+          "headline_template_en": "Tech Mogul {name} Spotted on Vacation in {location}",
+          "headline_template_ja": "テック界の大物{name}、{location}で休暇中か",
+          "body_template_en": "The elusive CEO was seen relaxing on a private yacht, sparking rumors of a new acquisition.",
+          "body_template_ja": "謎多きCEOがプライベートヨットでくつろぐ姿が目撃され、新たな買収の噂が飛び交っている。",
+          "sentiment_range": [0.0, 0.1],
+          "impact_scope": [],
+          "variables": ["name", "location"]
+        },
+        {
+          "id": "PRODUCT_FAD",
+          "headline_template_en": "New Trend '{trend_name}' Sweeps Through {country}",
+          "headline_template_ja": "新トレンド「{trend_name}」が{country}を席巻",
+          "body_template_en": "Youth in {country} are obsessed with {trend_name}. Experts call it 'harmless fun' but question its longevity.",
+          "body_template_ja": "{country}の若者たちは{trend_name}に夢中だ。専門家は「無害な遊び」としつつも、その持続性には疑問を呈している。",
+          "sentiment_range": [0.0, 0.0],
+          "impact_scope": [],
+          "variables": ["trend_name", "country"]
+        }
+      ]
+    }
+  }
+}
