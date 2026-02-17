@@ -56,6 +56,8 @@
 
 `init.sql` に、このプールを管理するテーブルを追加します。`liquidity_pools`（FX用）とは別に、信用取引専用の管理テーブルを作成します。
 
+また、プレイヤーによる流動性提供（レンディング）を実現するため、各プレイヤーの持分（Shares）を管理するテーブル `margin_pool_providers` を追加し、`margin_pools` テーブルに総発行シェア数（`total_cash_shares`, `total_asset_shares`）を追加します。
+
 ---
 
 ## 4. トランザクション・フロー詳細
@@ -109,3 +111,44 @@
 * `borrowed_assets` が `total_assets` に近づくと、貸出料が垂直に上昇します。これが「在庫切れ（Locate不可）」の状態となり、既存のショート勢は莫大な維持費を払うか、買い戻す（決済する）かの二択を迫られます。
 3. **Botによる裁定取引**:
 * 金利が下がりすぎた銘柄をロングし、上がりすぎた銘柄をショートするBot（Arbitrageur）を実装しやすくなり、市場のボラティリティが安定します。
+
+---
+
+## 6. 流動性提供システム (Lending System)
+
+プレイヤーはプールに対して「現金」または「現物資産」を預け入れることで、流動性提供者（Lender）となり、借り手（Trader）が支払う金利の一部を収益として得ることができます。
+
+### 6.1. シェアトークン・モデル (Share Token Model)
+
+預け入れた資産の価値を追跡するために、DeFi（CompoundやAave）で採用されている「シェアトークン（cToken/aToken）」と同様のモデルを採用します。
+
+*   **Shares (持分)**: プレイヤーがプールに預け入れた資産の割合を示す単位。
+*   **Exchange Rate (交換レート)**: シェア1単位あたりの資産価値。
+    *   $`Exchange\ Rate = \frac{Total\ Liquidity\ (Principal + Interest)}{Total\ Shares}`$
+
+### 6.2. 利益還元の仕組み
+
+1.  **金利収入の発生**:
+    *   借り手がポジションを維持するために金利（Interest/Fee）を支払います。
+    *   この金利はプールの `total_cash` または `total_assets` に加算されます。
+2.  **シェア価値の上昇**:
+    *   金利収入により、分母（`Total Shares`）が変わらないまま分子（`Total Liquidity`）が増加します。
+    *   結果として `Exchange Rate` が上昇します。
+3.  **引き出し時の利益確定**:
+    *   プレイヤーが流動性を引き出す（Withdraw）際、預け入れ時よりも高いレートで換金されるため、差額が利益（金利収入）となります。
+
+### 6.3. トランザクションフロー
+
+#### デポジット (Deposit)
+プレイヤーが 1,000 ARC をプールに預け入れる場合：
+1.  現在の `Exchange Rate` を計算（初期値は 1.0）。
+2.  `Issued Shares = 1,000 / Exchange Rate` を計算。
+3.  プレイヤーの `margin_pool_providers` レコードに `Issued Shares` を加算。
+4.  プールの `total_cash` に 1,000 を加算し、`total_cash_shares` に `Issued Shares` を加算。
+
+#### ウィズドロー (Withdraw)
+プレイヤーが保有するシェア全てを引き出す場合：
+1.  現在の `Exchange Rate` を計算（金利収入により 1.05 に上昇していると仮定）。
+2.  `Redeem Amount = Owned Shares * Exchange Rate` を計算。
+3.  プレイヤーの `currency_balances` に `Redeem Amount` を加算。
+4.  プールの `total_cash` から `Redeem Amount` を減算し、`total_cash_shares` から `Owned Shares` を減算。

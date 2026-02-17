@@ -345,11 +345,31 @@ CREATE TABLE IF NOT EXISTS margin_pools (
     borrow_rate DECIMAL(21, 0) DEFAULT 0 COMMENT 'Long interest rate (Cost to borrow cash)',
     short_fee DECIMAL(21, 0) DEFAULT 0 COMMENT 'Short fee rate (Cost to borrow asset)',
     
+    -- Share Tokens (Lending System)
+    total_cash_shares DECIMAL(21, 0) DEFAULT 0 COMMENT 'Total shares issued to cash lenders',
+    total_asset_shares DECIMAL(21, 0) DEFAULT 0 COMMENT 'Total shares issued to asset lenders',
+
     updated_at BIGINT DEFAULT 0,
     
     FOREIGN KEY (asset_id) REFERENCES assets(asset_id),
     FOREIGN KEY (currency_id) REFERENCES currencies(currency_id),
     UNIQUE(asset_id, currency_id)
+);
+
+-- 流動性提供者 (Liquidity Providers for Margin Pools)
+CREATE TABLE IF NOT EXISTS margin_pool_providers (
+    provider_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    pool_id INT NOT NULL,
+    user_id BIGINT NOT NULL,
+
+    cash_shares DECIMAL(21, 0) DEFAULT 0,
+    asset_shares DECIMAL(21, 0) DEFAULT 0,
+
+    updated_at BIGINT DEFAULT 0,
+
+    FOREIGN KEY (pool_id) REFERENCES margin_pools(pool_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    UNIQUE(pool_id, user_id)
 );
 
 -- --------------------------------------------------------
