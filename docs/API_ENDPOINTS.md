@@ -93,3 +93,13 @@ Paper Street のバックエンドAPIエンドポイント一覧です。
 ## 8. Leaderboard (ランキング)
 *   `GET /leaderboard`
     *   資産ランキングを取得します。シーズン別、通算などのフィルタが可能です。
+
+## 9. Indices (指数)
+*   `POST /indices/{asset_id}/create`
+    *   Index（指数）の構成銘柄（現物バスケット）を拠出し、Indexユニットを発行（Creation）します。
+    *   **すべてのプレイヤーおよびBotが利用可能です。**
+    *   Body: `quantity` (作成するIndexの単位数。デフォルトは1)。
+*   `POST /indices/{asset_id}/redeem`
+    *   保有しているIndexユニットを返還（償還）し、構成銘柄（現物バスケット）を受け取ります（Redemption）。
+    *   **すべてのプレイヤーおよびBotが利用可能です。**
+    *   Body: `quantity` (償還するIndexの単位数。デフォルトは1)。
