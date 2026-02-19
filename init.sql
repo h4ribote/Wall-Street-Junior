@@ -70,6 +70,12 @@ CREATE TABLE IF NOT EXISTS companies (
     name VARCHAR(100) NOT NULL,
     ticker_symbol VARCHAR(10) UNIQUE NOT NULL,
     description TEXT,
+
+    -- Economic Simulation State
+    max_production_capacity BIGINT DEFAULT 10000 COMMENT 'Max units per quarter',
+    current_inventory BIGINT DEFAULT 0 COMMENT 'Current units in stock',
+    last_capex_at BIGINT DEFAULT 0 COMMENT 'Timestamp of last expansion',
+
     FOREIGN KEY (country_id) REFERENCES countries(country_id),
     FOREIGN KEY (sector_id) REFERENCES sectors(sector_id)
 );
@@ -86,6 +92,11 @@ CREATE TABLE IF NOT EXISTS financial_reports (
     net_income DECIMAL(21, 0) DEFAULT 0 COMMENT 'Scaled currency',
     eps DECIMAL(21, 0) DEFAULT 0 COMMENT 'Earnings Per Share (Scaled)',
     
+    -- Economic Metrics
+    capex DECIMAL(21, 0) DEFAULT 0 COMMENT 'Capital Expenditure this quarter',
+    utilization_rate DECIMAL(21, 0) DEFAULT 0 COMMENT 'Scaled: 10000 = 100.00%',
+    inventory_level BIGINT DEFAULT 0 COMMENT 'Inventory at quarter end',
+
     guidance TEXT COMMENT 'Management guidance/outlook',
     published_at BIGINT NOT NULL,
     
