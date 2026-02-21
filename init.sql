@@ -71,13 +71,24 @@ CREATE TABLE IF NOT EXISTS companies (
     ticker_symbol VARCHAR(10) UNIQUE NOT NULL,
     description TEXT,
 
+    user_id BIGINT UNIQUE COMMENT 'Bot Account ID',
+
     -- Economic Simulation State
     max_production_capacity BIGINT DEFAULT 10000 COMMENT 'Max units per quarter',
     current_inventory BIGINT DEFAULT 0 COMMENT 'Current units in stock',
     last_capex_at BIGINT DEFAULT 0 COMMENT 'Timestamp of last expansion',
 
     FOREIGN KEY (country_id) REFERENCES countries(country_id),
-    FOREIGN KEY (sector_id) REFERENCES sectors(sector_id)
+    FOREIGN KEY (sector_id) REFERENCES sectors(sector_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- 資源・コモディティ (Resources / Commodities)
+CREATE TABLE IF NOT EXISTS resources (
+    resource_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    type VARCHAR(20) NOT NULL, -- ENERGY, METAL, FOOD, TECH, BASIC
+    description TEXT
 );
 
 -- 企業ファンダメンタルズ (Financial Reports)
@@ -109,12 +120,14 @@ CREATE TABLE IF NOT EXISTS assets (
     asset_id INT AUTO_INCREMENT PRIMARY KEY,
     ticker VARCHAR(10) UNIQUE NOT NULL,
     company_id INT NULL,
-    type ENUM('STOCK', 'BOND', 'INDEX') NOT NULL, 
+    resource_id INT NULL,
+    type ENUM('STOCK', 'BOND', 'INDEX', 'COMMODITY') NOT NULL,
     base_price DECIMAL(21, 0) NOT NULL COMMENT 'Integer scaled price',
     lot_size INT DEFAULT 1,
     is_tradable BOOLEAN DEFAULT TRUE,
     created_at BIGINT DEFAULT 0,
-    FOREIGN KEY (company_id) REFERENCES companies(company_id)
+    FOREIGN KEY (company_id) REFERENCES companies(company_id),
+    FOREIGN KEY (resource_id) REFERENCES resources(resource_id)
 );
 
 -- --------------------------------------------------------
@@ -273,14 +286,6 @@ CREATE TABLE IF NOT EXISTS news_feed (
     related_country_id INT
 );
 
--- 資源・コモディティ (Resources / Commodities)
-CREATE TABLE IF NOT EXISTS resources (
-    resource_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    type VARCHAR(20) NOT NULL, -- ENERGY, METAL, FOOD, TECH, BASIC
-    description TEXT
-);
-
 -- --------------------------------------------------------
 -- 5. Liquidity Pools (FX Market)
 -- --------------------------------------------------------
@@ -395,6 +400,32 @@ CREATE TABLE IF NOT EXISTS index_constituents (
     FOREIGN KEY (index_asset_id) REFERENCES assets(asset_id),
     FOREIGN KEY (component_asset_id) REFERENCES assets(asset_id),
     UNIQUE(index_asset_id, component_asset_id)
+);
+
+-- --------------------------------------------------------
+-- 7.5. Production & Supply Chain
+-- --------------------------------------------------------
+
+-- 生産レシピ (Production Recipes)
+CREATE TABLE IF NOT EXISTS production_recipes (
+    recipe_id INT AUTO_INCREMENT PRIMARY KEY,
+    company_id INT NOT NULL,
+    output_asset_id INT NOT NULL, -- 生産されるコモディティ
+    output_quantity DECIMAL(21, 0) NOT NULL DEFAULT 1,
+
+    FOREIGN KEY (company_id) REFERENCES companies(company_id),
+    FOREIGN KEY (output_asset_id) REFERENCES assets(asset_id)
+);
+
+-- レシピの材料 (Production Inputs)
+CREATE TABLE IF NOT EXISTS production_inputs (
+    input_id INT AUTO_INCREMENT PRIMARY KEY,
+    recipe_id INT NOT NULL,
+    input_asset_id INT NOT NULL, -- 原材料となるコモディティ
+    input_quantity DECIMAL(21, 0) NOT NULL, -- output 1単位を作るのに必要な量
+
+    FOREIGN KEY (recipe_id) REFERENCES production_recipes(recipe_id),
+    FOREIGN KEY (input_asset_id) REFERENCES assets(asset_id)
 );
 
 SET FOREIGN_KEY_CHECKS = 1;
