@@ -53,21 +53,7 @@
 *   **例**: 「Stardust Luxuryの新作ドレス、著名インフルエンサーが着用し話題に。」
 
 
-## 3. 「情報の非対称性」の導入 (Information Asymmetry)
-
-MMOとしての面白さを出すため、**「誰がいつニュースを知るか」**に差をつけます。
-
-*   **Premium Feed (課金/上位ランク特典)**:
-    *   一般プレイヤーより **3秒早く** ニュースを受信できる。
-    *   `init.sql` の `fee_tier` が `VIP` のユーザー向け機能。
-
-*   **Botの反応速度 (Latency)**:
-    *   高性能Botはニュース発生から **10ms** で反応。
-    *   低性能Botは **500ms〜2s** で反応。
-    *   これにより、ニュース直後はBot同士の戦いで乱高下し、人間が介入する余地が生まれます。
-
-
-## 4. センチメントとBotの挙動 (Math Model)
+## 3. センチメントとBotの挙動 (Math Model)
 
 `init.sql` にある `sentiment_score` (-100 〜 +100 と仮定) をどう使うかの数式案です。
 
@@ -94,7 +80,7 @@ target_price = current_price + target_delta
     *   すべてのBotが同じ計算をすると価格が即座に張り付くため、Botごとに `impact_factor` に乱数（ノイズ）を混ぜます。
 
 
-## 5. UI/UX デザイン案 (The Terminal)
+## 4. UI/UX デザイン案 (The Terminal)
 
 `GAMEPLAY_AND_UI.md` にある「News Feed」ウィジェットの詳細仕様です。
 
@@ -110,7 +96,7 @@ target_price = current_price + target_delta
     *   ユーザーはタグや保有銘柄（Related Assets）でフィルタリング可能。
 
 
-## 6. コンテンツ作成のための具体例 (Content Ideas)
+## 5. コンテンツ作成のための具体例 (Content Ideas)
 
 `world_setting.md` の企業設定を使ったニューステンプレート案です。
 

@@ -126,10 +126,8 @@ CREATE TABLE IF NOT EXISTS assets (
 CREATE TABLE IF NOT EXISTS users (
     user_id BIGINT PRIMARY KEY, -- Discord Snowflake ID (BIGINT)
     username VARCHAR(50) NOT NULL,
-    country_id INT,
-    fee_tier ENUM('STANDARD', 'PREMIUM', 'VIP') DEFAULT 'STANDARD' COMMENT 'Commission rate tier',
-    created_at BIGINT DEFAULT 0,
-    FOREIGN KEY (country_id) REFERENCES countries(country_id)
+    rank ENUM('Shrimp', 'Fish', 'Shark', 'Whale', 'Leviathan') DEFAULT 'Shrimp',
+    created_at BIGINT DEFAULT 0
 );
 
 -- 資産管理: 通貨残高 (Currency Balances)
